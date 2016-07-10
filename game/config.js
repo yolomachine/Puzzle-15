@@ -1,39 +1,41 @@
-function Field() {
-    var tiles;
-    var space = { "i": 0, "j": 0 };
-
-    this.clear = function(f) {
-        var child = f.lastChild;
-        while (child != undefined)  { f.removeChild(child); child = f.lastChild; }
+function createDiv(className, id, fn, text, spaceId) {
+    let div = document.createElement("div");
+    div.className = className;
+    div.id = id;
+    if (fn) div.onclick = fn;
+    if (parseInt(id)) {
+        let label = document.createElement("label");
+        label.innerHTML = text;
+        div.appendChild(label);
     }
+    return div;
+}
 
-    this.generate = function() {
-        var n = document.getElementById("dimension").value;
-        var f = document.getElementById("field");
+function Field() {
+    this.clear = function(f) {
+        while (f.lastChild) f.removeChild(f.lastChild);
+    };
+
+    this.generateLevel = function() {
+        let f = document.getElementById("field");
+        let n = document.getElementById("dimension").value;
         this.clear(f);
-        tiles = new Array(n);
-        for (var i = 0; i < n; ++i) {
-            tiles[i] = new Array(n);
-            f.appendChild(document.createElement("div")).className = "row";
-            for (var j = 0; j < n; ++j) {
-                f.lastChild.appendChild(document.createElement("div")).className = "tile";
-                tiles[i][j] = f.lastChild.lastChild;
-            }
+        for (let i = 0; i < n; ++i) {
+            f.appendChild(createDiv("row", "row" + i, null, '', (n*n-1)));
+            for (let j = 0; j < n; ++j)
+                f.lastChild.appendChild(createDiv("tile", (i + 1) + j * n, this.tileMove(), (i + 1) + j * n, (n*n-1)));
         }
         f.lastChild.lastChild.className = "space";
-        space.i = n;
-        space.j = n - 1;
-    }
+    };
 
-    this.click = function() {
+    this.tileMove = function() {
 
-    }
-
-    this.swapTiles = function(a, b) {
-        var temp = a;
-        a = b;
-        b = temp;
     }
 }
 
+function initialize() {
+    field.generateLevel();
+}
+
 var field = new Field();
+window.onload = initialize;
