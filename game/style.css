@@ -1,23 +1,18 @@
 select, button, .tile, .space {
     font-family: Rockwell;
     font-size: 32px;
-    margin-top: 5%;
+    margin-top: 3%;
 }
 
 .tile, .space {
+    font-size: 80px;
     height: 100px;
     width: 100px;
     margin: 1px;
-    font-size: 80px;
 }
 
 .row {
     display: inline-block;
-}
-
-.space {
-    padding: 5px;
-    color: #fff;
 }
 
 .tile {
@@ -43,8 +38,8 @@ select, button, .tile, .space {
 }
 .row:nth-of-type(odd)>.tile:nth-of-type(odd),
 .row:nth-of-type(even)>.tile:nth-of-type(even) {
-    color: #96281B;
     background-color: #FDE3A7;
+    color: #96281B;
 }
 
 .row:nth-of-type(odd)>.tile:nth-of-type(even):hover,
@@ -53,4 +48,10 @@ select, button, .tile, .space {
 .row:nth-of-type(odd)>.tile:nth-of-type(odd):hover {
     background-color: #34495E;
     color: #fff;
+}
+
+.table, .space {
+    background-color: #fff;
+    color: #fff;
+    padding: 5px;
 }
