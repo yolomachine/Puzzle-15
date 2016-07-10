@@ -1,0 +1,51 @@
+select, button, .tile {
+    font-family: Rockwell;
+    font-size: 32px;
+    margin-top: 5%;
+}
+
+.row {
+    display: inline-block;
+}
+
+.space {
+    height: 150px;
+    width: 150px;
+    margin: 1px;
+    padding: 5px;
+}
+
+.tile {
+    height: 150px;
+    width: 150px;
+    border: 5px solid #34495E;
+    border-radius: 5px;
+    margin: 1px;
+}
+
+.row:nth-of-type(odd)>.tile:nth-of-type(even),
+.row:nth-of-type(even)>.tile:nth-of-type(odd) {
+    background-color: #96281B;
+    color: #FDE3A7;
+    cursor: pointer;
+}
+.row:nth-of-type(odd)>.tile:nth-of-type(odd),
+.row:nth-of-type(even)>.tile:nth-of-type(even) {
+    color: #96281B;
+    background-color: #FDE3A7;
+    cursor: pointer;
+}
+
+.row:nth-of-type(odd)>.tile:nth-of-type(even):hover,
+.row:nth-of-type(even)>.tile:nth-of-type(odd):hover,
+.row:nth-of-type(even)>.tile:nth-of-type(even):hover,
+.row:nth-of-type(odd)>.tile:nth-of-type(odd):hover {
+    background-color: #34495E;
+    color: #fff;
+    cursor: pointer;
+}
+
+.field {
+    border: 5px solid #34495E;
+    background-color: #34495E;
+}
