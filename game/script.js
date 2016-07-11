@@ -1,5 +1,6 @@
 const tileSize = 100, borderWidth = 5, margin = 1;
 var space = {"col": 0, "row": 0, "number": 0};
+var valid = false;
 
 function getTopPos(id, n) {
     return (tileSize + 2 * borderWidth) * Math.floor(id / n);
@@ -28,6 +29,10 @@ function clear(obj) {
     while (obj.lastChild) obj.removeChild(obj.lastChild);
 }
 
+function animate() {
+
+}
+
 function Field() {
     var tileColor;
     this.setTileColor = function(c) {
@@ -51,21 +56,53 @@ function Field() {
         space.col = space.row = n-1;
     };
 }
-function tileMove() {
 
+function findTile(id) {
+    let row = document.getElementById("field").lastChild;
+    while (row) {
+       let child = row.lastChild;
+         while (child) {
+             if (child.id == id) return child;
+             child = child.previousSibling;
+         }
+        row = row.previousSibling;
+    }
+}
+
+function tileMove() {
+    if (valid) {
+        let spaceTile = findTile("space");
+        let tileId = this.id, spaceId = "space";
+        let tileClassName = "tile", spaceClassName = "space";
+        let tileLabel = this.lastChild.innerHTML, spaceLabel = spaceTile.lastChild.innerHTML;
+
+        this.id = spaceId; spaceTile.id = spaceLabel;
+        this.className = spaceClassName; spaceTile.className = tileClassName;
+        this.lastChild.innerHTML = spaceTile.lastChild.innerHTML = tileLabel;
+
+        space.number = parseInt(tileLabel);
+    };
 }
 
 function tileHover() {
+    if (this.id == "space") return;
     field.setTileColor(this.style.backgroundColor);
     let id = parseInt(this.id);
     let n = document.getElementById("dimension").value*1;
-    if ((id + 1 == space.number) || (id - 1 == space.number) || (id + n == space.number) || (id - n == space.number)) this.style.backgroundColor = "#00B16A";
+    if ((id + 1 == space.number) || (id - 1 == space.number) || (id + n == space.number) || (id - n == space.number)) {
+        valid = true;
+        this.style.backgroundColor = "#00B16A";
+    }
 }
 
 function tileHout() {
+    if (this.id == "space") return;
     let id = parseInt(this.id);
     let n = document.getElementById("dimension").value*1;
-    if ((id + 1 == space.number) || (id - 1 == space.number) || (id + n == space.number) || (id - n == space.number)) this.style.backgroundColor = field.getTileColor();
+    if ((id + 1 == space.number) || (id - 1 == space.number) || (id + n == space.number) || (id - n == space.number)) {
+        valid = false;
+        this.style.backgroundColor = field.getTileColor();
+    }
 }
 
 function initialize() {
