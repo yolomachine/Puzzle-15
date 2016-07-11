@@ -1,10 +1,10 @@
-select, button, .tile, .space {
+select, button, .tile, .space, .tile-near-space {
     font-family: Rockwell;
     font-size: 32px;
     margin-top: 3%;
 }
 
-.tile, .space {
+.tile, .space, .tile-near-space {
     font-size: 80px;
     height: 100px;
     width: 100px;
@@ -15,13 +15,9 @@ select, button, .tile, .space {
     display: inline-block;
 }
 
-.tile {
+.tile, .tile-near-space {
     border: 5px solid #34495E;
     border-radius: 5px;
-}
-
-.tile, .tile>label {
-    cursor: pointer;
 }
 
 .table {
@@ -54,4 +50,12 @@ select, button, .tile, .space {
     background-color: #fff;
     color: #fff;
     padding: 5px;
+}
+
+.tile-near-space, .tile-near-space>label {
+    cursor: pointer;
+}
+
+.tile-near-space:hover {
+    background-color: #00B16A;
 }
