@@ -8,15 +8,10 @@
 </head>
 <body>
 
-<div class="generator" align="center">
-    <select id="dimension">
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-    </select>
-    <button type="button" onClick="field.generateLevel()">Generate</button>
+<div class="generator" id="generator" align="center">
+    <ul id="selector">
+    </ul>
+    <button type="button" onClick="field.shuffle()">Generate</button>
 </div>
 <br>
 <div class="table" id="field" align="center">

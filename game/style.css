@@ -1,7 +1,38 @@
-select, button, .tile, .space, .tile-near-space {
+select, button, li, .tile, .space, .tile-near-space {
     font-family: Rockwell;
     font-size: 32px;
-    margin-top: 3%;
+    margin-top: 2%;
+}
+
+ul, li {
+    display: inline;
+    margin-right: 3px;
+    padding: 5px;
+    color: #34495E;
+}
+
+li:hover {
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+.li-selected, .li-selected:hover {
+    background-color: #ccc;
+    border-radius: 5px;
+}
+
+button {
+    margin-left: 10px;
+    margin-right: 5px;
+    background-color: #fff;
+    color: #34495E;
+    border: 5px solid #00B16A;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #eff;
+    cursor: pointer;
 }
 
 .tile, .space, .tile-near-space {
@@ -20,7 +51,7 @@ select, button, .tile, .space, .tile-near-space {
     border-radius: 5px;
 }
 
-.table {
+.table, li, ul {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -52,8 +83,12 @@ select, button, .tile, .space, .tile-near-space {
     padding: 5px;
 }
 
-.tile-near-space, .tile-near-space>label {
+.tile-near-space, .tile-near-space>label, li {
     cursor: pointer;
+}
+
+ul {
+    cursor: default;
 }
 
 .tile-near-space:hover {
