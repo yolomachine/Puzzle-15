@@ -51,7 +51,7 @@ button:hover {
     border-radius: 5px;
 }
 
-.table, li, ul {
+.field, li, ul {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -77,7 +77,7 @@ button:hover {
     color: #fff;
 }
 
-.table, .space {
+.field, .space {
     background-color: #fff;
     color: #fff;
     padding: 5px;
