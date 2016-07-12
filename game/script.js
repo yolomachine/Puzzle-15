@@ -1,4 +1,5 @@
 var valid = false, isAnimating = false, selected = "li4", space = {"number": 0, "className": "space", "id": "space"};
+var tiles = [];
 
 function div(x, y) {
     return Math.floor(x / y);
@@ -72,10 +73,32 @@ function Field() {
         field.generateLevel();
     }
     this.shuffle = function() {
-        for (let i = 1, a, b; i < Math.pow(document.getElementById(selected).innerHTML*1, 2) - 1; ++i) {
+        let n = parseInt(document.getElementById(selected).innerHTML);
+        let tiles = [];
+        for (let i = 1, a, b; i < Math.pow(n, 2) - 1; ++i) {
             a = findTile(i); do { b = findTile(Math.floor(Math.random() * i)) } while(b.className == space.className);
             labelSwap(a, b);
         }
+        let row = document.getElementById("field").firstChild;
+        for (let i = 0; i < n; ++i) {
+            let child = row.firstChild;
+            for (let j = 0; j < n; ++j) {
+                if ((i + 1) + j * n != child.lastChild.innerHTML) tiles.push((i + 1) + j * n);
+                child = child.nextSibling;
+            }
+            row = row.nextSibling;
+        }
+        let sum = 0;
+        for (let i = 0; i < tiles.length; ++i)
+            for (let j = i + 1; j < tiles.length; ++j)
+                if (tiles[i] > tiles[j]) ++sum;
+        if (n % 2) {
+            if (sum % 2)
+            this.shuffle();
+        }
+        else if ((sum + 1) % 2)
+            this.shuffle();
+        else return;
     }
     this.checkAnswer = function() {
         let n = parseInt(document.getElementById(selected).innerHTML);
