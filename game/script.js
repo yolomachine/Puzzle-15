@@ -66,39 +66,43 @@ function Field() {
             ul.appendChild(x);
         }
         document.getElementById(selected).className = "li-selected";
-    }
+    };
     this.setLevel = function() {
         classSwap(this, document.getElementById(selected));
         idSwap(this, document.getElementById(selected));
         field.generateLevel();
-    }
+    };
     this.shuffle = function() {
         let n = parseInt(document.getElementById(selected).innerHTML);
-        let tiles = [];
-        for (let i = 1, a, b; i < Math.pow(n, 2) - 1; ++i) {
-            a = findTile(i); do { b = findTile(Math.floor(Math.random() * i)) } while(b.className == space.className);
-            labelSwap(a, b);
-        }
-        let row = document.getElementById("field").firstChild;
-        for (let i = 0; i < n; ++i) {
-            let child = row.firstChild;
-            for (let j = 0; j < n; ++j) {
-                if ((i + 1) + j * n != child.lastChild.innerHTML) tiles.push((i + 1) + j * n);
-                child = child.nextSibling;
+        let tiles;
+        do {
+            tiles = new Array(n * n);
+            for (let i = 1, a, b; i < Math.pow(n, 2) - 1; ++i) {
+                a = findTile(i);
+                do {
+                    b = findTile(Math.floor(Math.random() * i))
+                } while (b.className == space.className);
+                labelSwap(a, b);
             }
-            row = row.nextSibling;
-        }
-        let sum = 0;
-        for (let i = 0; i < tiles.length; ++i)
-            for (let j = i + 1; j < tiles.length; ++j)
-                if (tiles[i] > tiles[j]) ++sum;
-        if (n % 2) {
-            if (sum % 2)
-            this.shuffle();
-        }
-        else if ((sum + 1) % 2)
-            this.shuffle();
-        else return;
+            let row = document.getElementById("field").firstChild;
+            for (let i = 0; i < n; ++i) {
+                let child = row.firstChild;
+                for (let j = 0; j < n; ++j) {
+                    tiles[i + j*n] = child.firstChild.innerHTML;
+                    child = child.nextSibling;
+                }
+                row = row.nextSibling;
+            }
+        } while(!this.checkSolubility(tiles));
+    };
+    this.checkSolubility = function(tiles) {
+        let inversionSum = 0;
+        let n = tiles.length;
+        for (let i = 0; i < n; ++i)
+            for (let j = i + 1; j < n; ++j)
+                if (tiles[i] > tiles[j]) ++inversionSum;
+        if (tiles.length % 2) return !(inversionSum % 2);
+        else return !((inversionSum + n - (1 + div(n*n-1, n))) % 2);
     }
     this.checkAnswer = function() {
         let n = parseInt(document.getElementById(selected).innerHTML);
@@ -119,11 +123,11 @@ function Field() {
 function findTile(id) {
     let row = document.getElementById("field").lastChild;
     while (row) {
-       let child = row.lastChild;
-         while (child) {
+        let child = row.lastChild;
+        while (child) {
              if (child.id == id) return child;
              child = child.previousSibling;
-         }
+        }
         row = row.previousSibling;
     }
 }
@@ -145,19 +149,20 @@ function swapTile(a, b) {
 
 function moveTile() {
     if (valid && !isAnimating) {
-        isAnimating = true;
         swapTile(this, findTile(space.id));
         field.checkAnswer();
+        isAnimating = true;
     }
 }
 
 function tileNearSpaceHover() {
     if (this.id == space.id) return;
     let id = parseInt(this.id);
-    let n = document.getElementById(selected).innerHTML*1;
-    if ((id + 1 == space.number && div(id + 1, n) == div(space.number, n)) || 
-        (id - 1 == space.number && div(id - 1, n) == div(space.number, n)) || 
-        (id + n == space.number) || (id - n == space.number)) {
+    let n = parseInt(document.getElementById(selected).innerHTML);
+    if ((id + 1 == space.number && div(id, n) == div(space.number, n)) ||
+        (id - 1 == space.number && div(id, n) == div(space.number, n)) ||
+        (id + n == space.number) ||
+        (id - n == space.number)) {
         valid = true;
         this.className = "tile-near-space";
     }
